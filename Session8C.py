@@ -32,3 +32,6 @@ numbers = [10, 20, 30]
 max_in_numbers = get_max(data=numbers, length=len(numbers))
 print('max_in_numbers:', max_in_numbers)
 
+# Write program to fetch min in mumbers list
+# draw stack heap for 5 numbers
+
