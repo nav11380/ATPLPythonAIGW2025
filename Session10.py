@@ -61,11 +61,11 @@ class Dish:
     # self will always be available as 1st input
     # in all the functions, created inside the class
     def show(self):
-        print("------------------------------")
+        print("------------DISH------------")
         print("Name:", self.name)
         print("Price:", self.price)
         print("Rating:", self.rating)
-        print("------------------------------")
+        print("------------DISH------------")
         print()
 
 

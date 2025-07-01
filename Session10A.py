@@ -19,9 +19,14 @@ class Menu:
         self.number_of_dishes = number_of_dishes
 
     def show(self):
-        print("------------------------------")
+        print("~~~~~~~~~~~~~MENU~~~~~~~~~~~~~~")
         print("Name:", self.name)
-        print("Dishes:", self.dishes)
+        # print("Dishes:", self.dishes)
+        
+        print("Dishes")
+        for index in range(len(self.dishes)):
+            self.dishes[index].show()
+
         print("number_of_dishes:", self.number_of_dishes)
-        print("------------------------------")
+        print("~~~~~~~~~~~~~MENU~~~~~~~~~~~~~~")
         

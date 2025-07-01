@@ -24,13 +24,15 @@ class Restaurant:
         self.menu = menu
 
     def show(self):
-        print("------------------------------")
+        print("^^^^^^^^^^^RESTURANT^^^^^^^^^^^^")
         print("Name:", self.name)
         print("Phone:", self.phone)
         print("Email:", self.email)
         print("Address:", self.address)
         print("Rating:", self.rating)
         print("Price_per_person:", self.price_per_person)
-        print("Menu:", self.menu)
-        print("------------------------------")
+        # print("Menu:", self.menu)
+        print("Menu")
+        self.menu.show()
+        print("^^^^^^^^^^^RESTURANT^^^^^^^^^^^^")
         
