@@ -21,6 +21,36 @@ class PlayList:
             self.head.previous = song
             self.tail = song
 
+    """
+    def iterate_forward(self):
+        song = self.head
+        song.show()
+        while song.next != self.head:
+            song = song.next
+            song.show()
+
+    def iterate_backward(self):
+        song = self.tail
+        song.show()
+        while song.previous != self.tail:
+            song = song.previous
+            song.show()
+    """
+
+    def iterate(self, direction=0):
+
+        if direction == 0:
+            song = self.head
+            song.show()
+            while song.next != self.head:
+                song = song.next
+                song.show()
+        else:
+            song = self.tail
+            song.show()
+            while song.previous != self.tail:
+                song = song.previous
+                song.show()
 
 
 """

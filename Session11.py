@@ -33,6 +33,20 @@ song3 = Song(
                 duration=6.2
             )
 
+song4 = Song(
+                track='4. Hi Hello', 
+                artists='george, ben', 
+                album='Album2', 
+                duration=6.2
+            )
+
+song5 = Song(
+                track='5. Thank You', 
+                artists='george, ben', 
+                album='Album3', 
+                duration=6.2
+            )
+
 # print('[main] song1:', song1)
 
 songs_play_list = PlayList()
@@ -40,3 +54,23 @@ songs_play_list = PlayList()
 songs_play_list.add(song=song1)
 songs_play_list.add(song=song2)
 songs_play_list.add(song=song3)
+songs_play_list.add(song=song4)
+songs_play_list.add(song=song5)
+
+
+# songs_play_list.iterate_forward()
+# songs_play_list.iterate_backward()
+# songs_play_list.iterate()
+songs_play_list.iterate(direction=1)
+
+
+"""
+
+    HW: (Mandatory)
+    Class1: WhatsAppMessage: text, sender, receiver, status
+    Class2: WhatsAppMessageList: head, tail, size (Doubly LinkedList)
+            here, follow the same session11, 11A, 11B
+            only head and tail will not refer to each other
+
+
+"""
