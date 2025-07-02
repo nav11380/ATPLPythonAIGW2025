@@ -1,4 +1,4 @@
-# class CircularDoublyLinkedList
+# class CircularDoublyLinkedList:
 
 class PlayList:
     
@@ -15,7 +15,8 @@ class PlayList:
             self.tail = song
             self.size += 1
         else:
-            pass
+            self.size += 1
+            self.tail = song
 
 
 """
