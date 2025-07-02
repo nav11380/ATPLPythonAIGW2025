@@ -9,14 +9,18 @@ class PlayList:
 
     # add is going to add a song in the linked list
     def add(self, song):
+        self.size += 1
         # print('[PlayList][add] song:', song)
         if self.head == None:
             self.head = song
             self.tail = song
-            self.size += 1
         else:
-            self.size += 1
+            self.tail.next = song
+            song.previous = self.tail
+            song.next = self.head
+            self.head.previous = song
             self.tail = song
+
 
 
 """
