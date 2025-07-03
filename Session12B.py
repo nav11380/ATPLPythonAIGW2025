@@ -56,9 +56,9 @@ flight5 = {
 # List of Dictionary Objects
 flights = [flight1, flight2, flight3, flight4, flight5]
 
+"""
 # Use Linear Search, to search flights from chandigarh to mumbai or begaluru
-
-# Filter Says: Search all of the data/elements matching criteria
+# is Filtering, which Says: Search all of the data/elements matching criteria
 
 source = input('Enter Source Location')
 destinition = input('Enter Destinition Location')
@@ -68,5 +68,22 @@ for index in range(len(flights)):
 
     if flights[index]['from'] == source and flights[index]['to'] == destinition:
         print(flights[index])
-   
+"""
+
+# Implement Linear Search on Flight Code
+
+def search(flights, flight_code):
+    
+    flag = False
+    for index in range(len(flights)):
+        if flights[index]['flight_code'] == flight_code:
+            print(flight_code, 'found at index:', index)
+            print(flights[index])
+            flag = True
+            break
+
+    if flag == False:
+        print('flight_code', flight_code,'not found')
+
+search(flights, 'ai522')
     
