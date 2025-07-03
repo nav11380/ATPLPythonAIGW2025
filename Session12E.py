@@ -1,4 +1,4 @@
-# Circular Doubli Linked List
+# Circular Doubly Linked List
 class FlightList:
 
     def __init__(self):
@@ -46,7 +46,6 @@ class FlightList:
             print('Flight Code Matched. Flight Found..')
             flight.show()
             flag = True
-            return
         else:
             while flight.next != self.head:
                 flight = flight.next

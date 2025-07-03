@@ -66,4 +66,9 @@ flights.add(flight5)
 
 
 # flights.iterate()
-flights.search_by_code(flight_code='ai5223')
+flights.search_by_code(flight_code=input('Enter Flight Code: '))
+
+"""
+HW:
+In all the logics, implement filter function
+"""
