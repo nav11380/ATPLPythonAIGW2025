@@ -89,5 +89,21 @@ flight5 = Flight(
 # List of Flight Objects
 flights = [flight1, flight2, flight3, flight4, flight5]
 
-for index in range(len(flights)):
-    flights[index].show()
+# for index in range(len(flights)):
+#     flights[index].show()
+
+
+def search(flights, flight_code):
+    
+    flag = False
+    for index in range(len(flights)):
+        if flights[index].flight_code == flight_code:
+            print(flight_code, 'found at index:', index)
+            flights[index].show()
+            flag = True
+            break
+
+    if flag == False:
+        print('flight_code', flight_code,'not found')
+
+search(flights, 'ai522')
