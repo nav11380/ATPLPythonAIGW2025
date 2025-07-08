@@ -10,6 +10,7 @@ class Car:
         self.price = price
         self.range = range
         self.hp = hp
+        self.index = None
 
         # Internal usage to create linked list
         self.next = None
