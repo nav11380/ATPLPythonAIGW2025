@@ -22,6 +22,7 @@
         3. Slicing
         4. Concatenation
         5. Multiplicity
+        
         6. Membership Testing
         
 
@@ -155,8 +156,13 @@ data = {10, 20, 30, 40, 50}
 # dictionary
 student = {
     'roll_number': 1,
-    'name': 'JOhn',
+    'name': 'John',
     'age': 20,
     'gender': 'male',
     'address': 'redwood shores',
 }
+print('20 in data:', 20 in data)
+print('roll_number in student:', 'roll_number' in student)
+
+# False: Membership Testing works only on keys in dictionary
+print('1 in student:', 1 in student)
