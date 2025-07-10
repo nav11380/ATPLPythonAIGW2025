@@ -30,8 +30,12 @@ attendance_record = {}.fromkeys(keys, attendance)
 # attendance_record = {}.fromkeys(list(students.keys()), 
 #                                 {}.fromkeys(months_list, 100))
 
+attendance_record[101]['jan'] -=5
+
 print('attendance_record')
 print(attendance_record)
+
+
 
 """
 attendance_record = {
