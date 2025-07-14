@@ -1,0 +1,16 @@
+# Virtual environment
+myenv/
+.myenv/
+
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# IDE/Editor specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Sensitive information
+.env

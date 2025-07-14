@@ -1,0 +1,4 @@
+Develop a Doctors Application
+Doctor can create a Patient (Perform all CRUD on it)
+Doctor can create a consultaiton for a Patient (Perform all CRUD on it)
+Develop a Menu Driven Program
