@@ -10,6 +10,8 @@
     5. close connection to release memory resources
 
 """
+# Controller
+
 import mysql.connector as db
 
 class DBHelper:
@@ -34,12 +36,12 @@ class DBHelper:
     # 4. Execute the SQL Query
     # Insert/Update/Delete Query
     def write(self, sql_query):
-        self.cursor.execuet(sql_query)
+        self.cursor.execute(sql_query)
         print('[DB Helper] SQL Query Executed...')
 
     # Select Query
     def read(self, sql_query):
-        self.cursor.execuet(sql_query)
+        self.cursor.execute(sql_query)
         rows = self.cursor.fetchall()
         print('[DB Helper] SQL Query Executed. Rows Fetched: ', len(rows))
         return rows

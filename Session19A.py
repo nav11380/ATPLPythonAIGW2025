@@ -20,6 +20,8 @@
 
 """
 
+# Model or Object or Entity or Bean
+
 import datetime
 
 # 2. Write its class

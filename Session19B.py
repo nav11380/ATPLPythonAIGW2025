@@ -31,6 +31,8 @@
 
 """
 
+# Model or Object or Entity or Bean
+
 import datetime
 
 class Consultation:
