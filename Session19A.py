@@ -18,6 +18,8 @@
         created_on datetime
     );
 
+    insert into Patient values(null, 'fionna', '9876512345', 'fionna@example.com','redwood shores', '2000-04-10', 'female', '2025-07-15 11:16:00')
+
 """
 
 # Model or Object or Entity or Bean

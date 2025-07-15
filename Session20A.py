@@ -5,6 +5,8 @@
 # View + Controller
 
 import datetime
+from Session20 import DBHelper
+from Session19A import Patient
 
 class DoctorsApp:
 
@@ -13,6 +15,8 @@ class DoctorsApp:
         print('Welcome to Doctors App')
         print('App Started at: ', datetime.datetime.now())
         print('~~~~~~~~~~~~~~~~~~~~~~~~~')
+        
+        self.db_helper = DBHelper()
 
 
     def show_main_menu(self):
@@ -34,6 +38,7 @@ class DoctorsApp:
                 print('Thank You for using Doctors App')
                 print('App Closed at: ', datetime.datetime.now())
                 print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+                self.db_helper.close()
                 break
             else:
                 print('Enter Suitable Menu Option...')
@@ -46,6 +51,11 @@ class DoctorsApp:
         print('~~~~~~~~~~~~~~~~~~~~~~')
 
         while True:
+            # menu_string = """Patient Menu: 
+            # 1: Add New Patient
+            # 2: Update Existing Patient
+            # """
+            # print(menu_string)
             print('Patient Menu: ')
             print('1: Add New Patient')
             print('2: Update Existing Patient')
@@ -59,13 +69,34 @@ class DoctorsApp:
             choice = int(input('Enter Your Choice: '))
             
             if choice == 1:
-                pass
+                patient = Patient()
+                patient.input_patient_details()
+                sql_query = "insert into Patient values(null, '{}', '{}', '{}','{}', '{}', '{}', '{}')".format(
+                    patient.name,
+                    patient.phone,
+                    patient.email,
+                    patient.address,
+                    patient.dob,
+                    patient.gender,
+                    patient.created_on
+                )
+                self.db_helper.write(sql_query)
+
             elif choice == 2:
                 pass
             elif choice == 3:
-                pass
+                
+                patient_id = int(input('Enter Patient ID to Delete: '))
+                sql_query = "delete from Patient where patient_id = {}".format(patient_id)
+                self.db_helper.write(sql_query)
+
             elif choice == 4:
-                pass
+                
+                sql_query = "select * from Patient"
+                rows = self.db_helper.read(sql_query)
+                for row in rows:
+                    print(row)
+
             elif choice == 9:
                 print('~~~~~~~~~~~~~~~~~~~~~~')
                 print('Patient Menu Closed')

@@ -36,11 +36,14 @@ class DBHelper:
     # 4. Execute the SQL Query
     # Insert/Update/Delete Query
     def write(self, sql_query):
+        print('[DB Helper] Query:', sql_query)
         self.cursor.execute(sql_query)
+        self.connection.commit()
         print('[DB Helper] SQL Query Executed...')
 
     # Select Query
     def read(self, sql_query):
+        print('[DB Helper] Query:', sql_query)
         self.cursor.execute(sql_query)
         rows = self.cursor.fetchall()
         print('[DB Helper] SQL Query Executed. Rows Fetched: ', len(rows))
