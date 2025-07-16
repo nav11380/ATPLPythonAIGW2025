@@ -19,6 +19,7 @@
         FOREIGN KEY (patient_id) REFERENCES Patient(patient_id)
     );
 
+    insert into Consultation values(null, 5, 'high fever - 102', 'dolo', '2025-07-25 16:00:00', '2025-07-16 00:00:00')
     
     Patient
     1. John .....
