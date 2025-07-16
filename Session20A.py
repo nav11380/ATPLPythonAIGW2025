@@ -16,24 +16,32 @@ class DoctorsApp:
         print('App Started at: ', datetime.datetime.now())
         print('~~~~~~~~~~~~~~~~~~~~~~~~~')
         
-        self.db_helper = DBHelper()
+        self.db_helper = DBHelper(
+            user='root',
+            password='',
+            host='127.0.0.1',
+            database='gw2025'
+        )
 
 
     def show_main_menu(self):
 
         while True:
 
+            print('~~~~~~~~~~~~~~~~~~~~~')
             print('Main Menu: ')
             print('1: Patient')
             print('2: Consulatation')
-            print('3: Quit')
+            print('0: Quit')
+            print('~~~~~~~~~~~~~~~~~~~~~')
+
             choice = int(input('Enter Your Choice: '))
             
             if choice == 1:
                 self.show_patient_menu()
             elif choice == 2:
                 self.show_consultation_menu()
-            elif choice == 3:
+            elif choice == 0:
                 print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
                 print('Thank You for using Doctors App')
                 print('App Closed at: ', datetime.datetime.now())
@@ -65,7 +73,7 @@ class DoctorsApp:
             print('6: Fetch Male Patients')
             print('7: Fetch Female Patients')
             print('8: Fetch Patients by Created On Date (Sort)')
-            print('9: Quit')
+            print('0: Quit')
             choice = int(input('Enter Your Choice: '))
             
             if choice == 1:
@@ -97,7 +105,7 @@ class DoctorsApp:
                 for row in rows:
                     print(row)
 
-            elif choice == 9:
+            elif choice == 0:
                 print('~~~~~~~~~~~~~~~~~~~~~~')
                 print('Patient Menu Closed')
                 print('~~~~~~~~~~~~~~~~~~~~~~')
@@ -118,7 +126,7 @@ class DoctorsApp:
             print('3: Delete Existing Consultation')
             print('4: Fetch All Consultation')
             print('5: Fetch Consultation of a Patient')
-            print('6: Quit')
+            print('0: Quit')
             choice = int(input('Enter Your Choice: '))
             
             if choice == 1:
@@ -129,7 +137,7 @@ class DoctorsApp:
                 pass
             elif choice == 4:
                 pass
-            elif choice == 6:
+            elif choice == 0:
                 print('~~~~~~~~~~~~~~~~~~~~~~~~')
                 print('Consultation Menu Opened')
                 print('~~~~~~~~~~~~~~~~~~~~~~~~')

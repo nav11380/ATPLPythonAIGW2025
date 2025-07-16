@@ -2,3 +2,26 @@ Develop a Doctors Application
 Doctor can create a Patient (Perform all CRUD on it)
 Doctor can create a consultaiton for a Patient (Perform all CRUD on it)
 Develop a Menu Driven Program
+
+
+MODEL
+    (Object) -> Temporary
+    Patient
+    Consultaiton
+
+    Table -> Permanent
+
+VIEW
+    Menu Driver Program
+    DoctorsApp
+        show_menu -> main menu, patient menu, consultation menu
+        +
+        Use DBHelper to perfrom CRUD Operations on selection of menu
+
+CONTROLLER
+    
+    DBHelper
+    it will have algorithmic approach to write and read objects in database tables
+
+MAIN
+In order to execute DoctorsApp, you need a main file

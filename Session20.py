@@ -16,14 +16,15 @@ import mysql.connector as db
 
 class DBHelper:
     
-    def __init__(self):
+    def __init__(self, user, password, host, database):
         
         # 1. Create Connection
         self.connection = db.connect(
-                        user='root',
-                        password='',
-                        host='127.0.0.1',
-                        database='gw2025'
+                        user=user,
+                        password=password,
+                        host=host,
+                        # port='3306',
+                        database=database
                     )
         print('[DB Helper] Connection Created...')
 
