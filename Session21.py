@@ -92,7 +92,68 @@ class DoctorsApp:
                 self.db_helper.write(sql_query)
 
             elif choice == 2:
-                pass
+                # Update Patient
+                # 1. Fetch the Existing Patient
+                patient_id = input('Enter Patient Id to Update Details: ')
+                # Before i Update, i will fetch the exiting patient details
+                sql_query = "select * from Patient where patient_id = '{}'".format(patient_id)
+                rows = self.db_helper.read(sql_query)
+                if len(rows) == 1:
+                    
+                    patient = Patient()
+                    patient.patient_id = rows[0][0]
+                    patient.name = rows[0][1]
+                    patient.phone = rows[0][2]
+                    patient.email = rows[0][3]
+                    patient.address = rows[0][4]
+                    patient.dob = rows[0][5]
+                    patient.gender = rows[0][6]
+                    patient.created_on = rows[0][7]
+
+                    patient.show()
+
+                    name = input('Enter New Patient Name: ')
+                    if len(name) != 0:
+                        patient.name = name
+
+                    phone = input('Enter New Patient Phone: ')
+                    if len(phone) != 0:
+                        patient.phone = phone
+
+                    email = input('Enter New Patient Email: ')
+                    if len(email) != 0:
+                        patient.email = email
+
+                    address = input('Enter New Patient Address: ')
+                    if len(address) != 0:
+                        patient.address = address
+
+                    dob = input('Enter New Patient DOB (yyyy-mm-dd): ')
+                    if len(dob) != 0:
+                        patient.dob = dob
+
+                    gender = input('Enter New Patient Gender: ')
+                    if len(gender) != 0:
+                        patient.gender = gender
+
+                    sql_query = "update Patient set name = '{}', phone = '{}', email = '{}', address='{}', dob='{}', gender='{}', created_on='{}' where patient_id = {}".format(
+                        patient.name,
+                        patient.phone,
+                        patient.email,
+                        patient.address,
+                        patient.dob,
+                        patient.gender,
+                        patient.created_on,
+                        patient.patient_id
+                    )
+
+                    self.db_helper.write(sql_query)
+                    print('[DoctorsApp] Patient Updated :)')
+
+                else:
+                    print('No Such Patient found with ID:', patient_id)
+
+
             elif choice == 3:
                 
                 patient_id = int(input('Enter Patient ID to Delete: '))
@@ -103,7 +164,19 @@ class DoctorsApp:
                 sql_query = "select * from Patient"
                 rows = self.db_helper.read(sql_query)
                 for row in rows:
-                    print(row)
+                    
+                    patient = Patient()
+                    patient.patient_id = row[0]
+                    patient.name = row[1]
+                    patient.phone = row[2]
+                    patient.email = row[3]
+                    patient.address = row[4]
+                    patient.dob = row[5]
+                    patient.gender = row[6]
+                    patient.created_on = row[7]
+
+                    # print(row)
+                    patient.show()
                 
             elif choice == 5:
                 # Explore -> How to put unique key on a column
@@ -126,7 +199,12 @@ class DoctorsApp:
                     print(row)
 
             elif choice == 8:
-                pass
+                # HW1: to explore how to write SQL quert with sort asc, desc
+                # sql_query = "select * from Patient where created_on = {}"
+                sql_query = "select * from Patient"
+                rows = self.db_helper.read(sql_query)
+                for row in rows:
+                    print(row)
 
             elif choice == 0:
                 print('~~~~~~~~~~~~~~~~~~~~~~')
@@ -189,11 +267,28 @@ class DoctorsApp:
                     print('Consultation Cannot be Created without Patient ID :)')
 
             elif choice == 2:
+                # HW2: update consultation of a patient
                 pass
+
             elif choice == 3:
-                pass
+                consultation_id = int(input('Enter Consulation Id: '))
+                sql_query = "delete from Consultation where consultation_id = {}".format(consultation_id)
+                self.db_helper.write(sql_query)
+            
             elif choice == 4:
-                pass
+                sql_query = "select * from Consultation"
+                rows = self.db_helper.read(sql_query)
+                for row in rows:
+                    # HW3: Convert row to consultation and use show function
+                    print(row)
+
+            elif choice == 5:
+                patient_id = int(input('Enter Patient Id: '))
+                sql_query = "select * from Consultation where patient_id = {}".format(patient_id)
+                rows = self.db_helper.read(sql_query)
+                for row in rows:
+                    print(row)
+                
             elif choice == 0:
                 print('~~~~~~~~~~~~~~~~~~~~~~~~')
                 print('Consultation Menu Opened')

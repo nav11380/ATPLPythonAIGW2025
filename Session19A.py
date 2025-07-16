@@ -20,6 +20,8 @@
 
     insert into Patient values(null, 'fionna', '9876512345', 'fionna@example.com','redwood shores', '2000-04-10', 'female', '2025-07-15 11:16:00')
 
+    update Patient set name = 'Fionn Flynn', phone = '9876512345', email = 'fionna.flynn@example.com', address='country homes', dob='2000-04-10', gender='female', craeted_on='2025-07-15 11:16:00' where patient_id = 6
+
 """
 
 # Model or Object or Entity or Bean
