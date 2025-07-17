@@ -136,16 +136,17 @@ class DoctorsApp:
                     if len(gender) != 0:
                         patient.gender = gender
 
-                    sql_query = "update Patient set name = '{}', phone = '{}', email = '{}', address='{}', dob='{}', gender='{}', created_on='{}' where patient_id = {}".format(
+                    sql_query = "update Patient set name = '{}', phone = '{}', email = '{}', address='{}', dob='{}', gender='{}' where patient_id = {}".format(
                         patient.name,
                         patient.phone,
                         patient.email,
                         patient.address,
                         patient.dob,
                         patient.gender,
-                        patient.created_on,
                         patient.patient_id
                     )
+
+                    # sql_query = "update Patient set name = '{name}', phone = '{phone}', email = '{email}', address='{address}', dob='{dob}', gender='{gender}' where patient_id = {patient_id}".format_map(vars(patient))
 
                     self.db_helper.write(sql_query)
                     print('[DoctorsApp] Patient Updated :)')
