@@ -56,6 +56,7 @@ def main():
     # It is required for Session Management
     web_app.secret_key = 'doctors-app-key-v1'
     web_app.run()
+    # web_app.run(port=5001)
 
 if __name__ == '__main__':
     main()
