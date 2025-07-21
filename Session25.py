@@ -8,6 +8,8 @@ db = MongoDBHelper()
 db.select_db(db_name='gw2025', collection='users')
 
 # View
+# HW:Validation of the Form: 
+# https://www.w3schools.com/bootstrap5/bootstrap_form_validation.php
 @web_app.route('/')
 def index():
     return render_template('index.html')
@@ -30,6 +32,24 @@ def add_user_in_db():
     db.insert(document=user.to_document())
 
     return render_template('home.html')
+
+@web_app.route('/fetch-user', methods=['POST'])
+def fetch_user_from_db():
+    query = {
+        'email': request.form['email'],
+        'password': hashlib.sha256(request.form['password'].encode('utf-8')).hexdigest()
+    }
+
+    documents = db.fetch(query)
+
+    user = documents[0]
+    user.show()
+
+    if len(documents) > 0:
+        return render_template('home.html')
+    else:
+        return 'Username or Password Invalid. Please Try Again'
+   
 
 def main():
     # Secret Key, we have to create manually of our choice
