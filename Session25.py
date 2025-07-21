@@ -43,7 +43,7 @@ def fetch_user_from_db():
     documents = db.fetch(query)
 
     user = documents[0]
-    user.show()
+    print(user)
 
     if len(documents) > 0:
         return render_template('home.html')
