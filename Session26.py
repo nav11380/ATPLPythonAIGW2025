@@ -1,5 +1,6 @@
 from flask import *
 from Session25A import User
+from Session26A import Patient
 from Session24 import MongoDBHelper
 import hashlib
 
@@ -40,6 +41,7 @@ def add_user_in_db():
     user.password = hashlib.sha256(request.form['password'].encode('utf-8')).hexdigest()
     user.show()
 
+    db.select_db(collection='users')
     result = db.insert(document=user.to_document())
 
     if len(str(result.inserted_id)) > 0:
@@ -56,6 +58,30 @@ def add_user_in_db():
         return render_template('home.html', name=user.name, email=user.email)
     else:
         return 'Something Went Wrong. Please Try Again'
+    
+
+# Controller
+@web_app.route('/add-patient-in-db', methods=['POST'])
+def add_patient_in_db():
+    patient = Patient()
+    patient.name = request.form['name']
+    patient.phone = request.form['phone']
+    patient.email = request.form['email']
+    patient.address = request.form['address']
+    patient.gender = request.form['gender']
+    patient.age = request.form['age']
+    patient.doctor_id = session['user_id'] # Doctor ID
+   
+    print(patient.to_document())
+
+    db.select_db(collection='patients')
+    result = db.insert(document=patient.to_document())
+
+    if len(str(result.inserted_id)) > 0:
+
+        return render_template('home.html', name=session['name'], email=session['email'])
+    else:
+        return 'Something Went Wrong. Please Try Again'
 
 @web_app.route('/fetch-user', methods=['POST'])
 def fetch_user_from_db():
@@ -64,6 +90,7 @@ def fetch_user_from_db():
         'password': hashlib.sha256(request.form['password'].encode('utf-8')).hexdigest()
     }
 
+    db.select_db(collection='users')
     documents = db.fetch(query)
 
     user = documents[0] # retrieved from MongoDB and it is a dictionary

@@ -1,20 +1,14 @@
 # Patient Object: name, phone, email, address, gender, age, weight, bp, sugar, temperature, allergies
 class Patient:
 
-    def __init__(self, name, phone, email, address, 
-                 gender, age, weight, 
-                 bp, sugar, temperature, allergies, doctor_id):
+    def __init__(self, name='', phone='', email='', address='', 
+                 gender='', age=0, doctor_id=''):
         self.name = name
         self.phone = phone
         self.email = email
         self.address = address
         self.gender = gender
         self.age = age
-        self.weight = weight
-        self.bp = bp
-        self.sugar = sugar
-        self.temperature = temperature
-        self.allergies = allergies
         self.doctor_id = doctor_id
         
     def to_document(self):
