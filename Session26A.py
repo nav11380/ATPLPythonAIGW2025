@@ -1,4 +1,4 @@
-# Patient Object: name, phone, email, address, gender, age, weight, bp, sugar, temperature, allergies
+# Patient Object: name, phone, email, address, gender, age
 class Patient:
 
     def __init__(self, name='', phone='', email='', address='', 

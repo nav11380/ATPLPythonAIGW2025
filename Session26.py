@@ -78,10 +78,11 @@ def add_patient_in_db():
     result = db.insert(document=patient.to_document())
 
     if len(str(result.inserted_id)) > 0:
-
         return render_template('home.html', name=session['name'], email=session['email'])
     else:
         return 'Something Went Wrong. Please Try Again'
+
+
 
 @web_app.route('/fetch-user', methods=['POST'])
 def fetch_user_from_db():
@@ -103,6 +104,25 @@ def fetch_user_from_db():
         return render_template('home.html', name=user['name'], email=user['email'])
     else:
         return 'Username or Password Invalid. Please Try Again'
+   
+
+@web_app.route('/fetch-patients')
+def fetch_patients_from_db():
+    query = {
+        'doctor_id': session['user_id']
+    }
+
+    db.select_db(collection='patients')
+    # List of Documents/Dictionaries having Patients Data
+    documents = db.fetch(query) 
+
+    if len(documents) > 0:
+        return render_template('patients.html', name=session['name'], 
+                               email=session['email'], total=len(documents), 
+                               patients=documents
+                               )
+    else:
+        return 'Patients Not Found'
    
 
 def main():
