@@ -27,6 +27,8 @@
 """
 
 import streamlit as st
+from Session24 import MongoDBHelper
+
 st.set_page_config(page_title='Health Calculator')
 st.title('All In One Health Calculator')
 
@@ -91,3 +93,24 @@ with tab5:
         ideal_weight = 45.5 + 2.3 * (height_inches - 60)
     
     st.subheader('Dear {}, Your Ideal Weight must be: {} kgs'.format(name, round(ideal_weight, 2)))
+
+    """
+    db = MongoDBHelper()
+    db.select_db(db_name='gw2025', collection='health')
+
+    health_document = {
+        'name': name,
+        'age': age,
+        'gender': gender,
+        'height': height,
+        'weight': weight,
+        'bmi': bmi,
+        'bmr': bmr,
+        'fat': fat_percentage,
+        'water': water_intake_litres,
+        'ideal_weight': ideal_weight
+    }
+
+    result = db.insert(document=health_document)
+    st.success('Document Added in Database with ID {}'.format(result.inserted_id))
+    """
