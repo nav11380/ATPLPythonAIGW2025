@@ -3,6 +3,7 @@ from Session25A import User
 from Session26A import Patient
 from Session24 import MongoDBHelper
 import hashlib
+from bson.objectid import ObjectId
 
 web_app = Flask('Doctors App')
 db = MongoDBHelper()
@@ -155,7 +156,20 @@ def fetch_patients_from_db():
             return render_template('error.html', message='Patients Not Found', name=session['name'], email=session['email'])
     else:
         return redirect('/')
-   
+
+# Controller: Receives an Input in the URL
+@web_app.route('/delete-patient/<id>')
+def delete_patient(id):
+    db.select_db(collection='patients')
+    query = {'_id': ObjectId(id)}
+    result = db.delete(query)
+    if result.deleted_count > 0:
+        return render_template('success.html', message='Patient Deleted Successfully', name=session['name'], email=session['email'])
+    else:
+        return render_template('error.html', message='Patient Deletion Failed. Try Again', name=session['name'], email=session['email'])
+
+def update_patient():
+    pass
 
 def main():
     # Secret Key, we have to create manually of our choice
