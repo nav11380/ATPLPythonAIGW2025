@@ -209,7 +209,7 @@ def update_patient_in_db():
         db.select_db(collection='patients')
         query = {'_id': ObjectId(session['patient_id'])}
 
-        result = db.update(query, patient.to_document)
+        result = db.update(query, patient.to_document())
 
         if len(str(result.modified_count)) > 0:
             return render_template('success.html', message='Patient {} Updated successfully in the system'.format(patient.name), name=session['name'], email=session['email'])
