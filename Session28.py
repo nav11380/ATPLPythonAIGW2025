@@ -168,8 +168,58 @@ def delete_patient(id):
     else:
         return render_template('error.html', message='Patient Deletion Failed. Try Again', name=session['name'], email=session['email'])
 
-def update_patient():
-    pass
+@web_app.route('/update-patient/<id>')
+def update_patient(id): 
+
+    # Temporary Save Patient ID in Session
+    # Because in order to update patient, in orther db fucntion
+    # we would need patient id
+    session['patient_id'] = id
+
+    db.select_db(collection='patients')    
+    query = {'_id': ObjectId(id)}
+    documents = db.fetch(query)
+    if len(documents) > 0:
+        patient_document = documents[0]
+        return render_template('update-patient.html', 
+                               name=session['name'], 
+                               email=session['email'],
+                               patient=patient_document)
+    else:
+        return render_template('error.html', message='Patient Not Found. Somethiwng Went Wrong. Try Again', name=session['name'], email=session['email'])
+
+
+# Controller
+@web_app.route('/update-patient-in-db', methods=['POST'])
+def update_patient_in_db():
+
+    if len(session['user_id']) > 0:
+
+        patient = Patient()
+        patient.name = request.form['name']
+        patient.phone = request.form['phone']
+        patient.email = request.form['email']
+        patient.address = request.form['address']
+        patient.gender = request.form['gender']
+        patient.age = request.form['age']
+        patient.doctor_id = session['user_id'] # Doctor ID
+    
+        print(patient.to_document())
+
+        db.select_db(collection='patients')
+        query = {'_id': ObjectId(session['patient_id'])}
+
+        result = db.update(query, patient.to_document)
+
+        if len(str(result.modified_count)) > 0:
+            return render_template('success.html', message='Patient {} Updated successfully in the system'.format(patient.name), name=session['name'], email=session['email'])
+        else:
+            return render_template('error.html', message='Something Went Wrong. Try Again', name=session['name'], email=session['email'])
+    
+    else:
+        return redirect('/')
+
+
 
 def main():
     # Secret Key, we have to create manually of our choice
