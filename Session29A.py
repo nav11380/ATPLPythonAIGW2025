@@ -5,7 +5,9 @@
 
 class Consultation:
     
-    def __init__(self, weight=0, 
+    def __init__(self, 
+                 patient_name='',
+                 weight=0, 
                  fever=98.4, 
                  bphigh=120, 
                  bplow=80, 
@@ -16,6 +18,7 @@ class Consultation:
                  doctor_id='',
                  patient_id=''):
         
+        self.patient_name = patient_name
         self.weight = weight
         self.fever = fever
         self.bphigh = bphigh

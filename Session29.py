@@ -42,12 +42,13 @@ def add_patient():
 @web_app.route('/add-consultation/<id>')
 def add_consultation(id):
 
-    # Add the patient id into session
-    session['patient_id'] = id
-
     query = {'_id': ObjectId(id)}
     db.select_db(collection='patients')
     patient = db.fetch(query)[0]
+
+    # Add the patient id into session
+    session['patient_id'] = id
+    session['patient_name'] = patient['name']
 
     if len(session['user_id']) > 0:
         return render_template('add-consultation.html', name=session['name'], email=session['email'], patient_name=patient['name'])
@@ -131,6 +132,7 @@ def add_consultation_in_db():
     if len(session['user_id']) > 0:
 
         consultation = Consultation()
+        consultation.patient_name = session['patient_name'] 
         consultation.weight = request.form['weight']
         consultation.fever = request.form['fever']
         consultation.bphigh = request.form['bphigh']
@@ -202,6 +204,54 @@ def fetch_patients_from_db():
                                 )
         else:
             return render_template('error.html', message='Patients Not Found', name=session['name'], email=session['email'])
+    else:
+        return redirect('/')
+    
+@web_app.route('/fetch-consultations')
+def fetch_consulations_from_db():
+
+    if len(session['user_id']) > 0:
+
+        query = {
+            'doctor_id': session['user_id']
+        }
+
+        db.select_db(collection='consultations')
+        # List of Documents/Dictionaries having Patients Data
+        documents = db.fetch(query) 
+
+        if len(documents) > 0:
+            return render_template('consultations.html', name=session['name'], 
+                                email=session['email'], total=len(documents), 
+                                consultations=documents
+                                )
+        else:
+            return render_template('error.html', message='Consultations Not Found', name=session['name'], email=session['email'])
+    else:
+        return redirect('/')
+    
+
+@web_app.route('/fetch-consultations-of-patient/<id>')
+def fetch_consultations_of_patient_from_db(id):
+
+    if len(session['user_id']) > 0:
+
+        query = {
+            'doctor_id': session['user_id'],
+            'patient_id': id
+        }
+
+        db.select_db(collection='consultations')
+        # List of Documents/Dictionaries having Patients Data
+        documents = db.fetch(query) 
+
+        if len(documents) > 0:
+            return render_template('consultations.html', name=session['name'], 
+                                email=session['email'], total=len(documents), 
+                                consultations=documents
+                                )
+        else:
+            return render_template('error.html', message='Consulations Not Found', name=session['name'], email=session['email'])
     else:
         return redirect('/')
 

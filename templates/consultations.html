@@ -10,7 +10,7 @@
 <div class="container mt-3">
   <div class="mt-4 p-5 bg-primary text-white rounded">
     <h1>Doctors App</h1> 
-    <p>{{total}} Patient(s) in Your Account</p>
+    <p>{{total}} Consultation(s) in Your Account</p>
     <p>Welcome {{name}} | {{email}}</p>
   </div>
 
@@ -25,9 +25,6 @@
             <a class="nav-link" href="/add-patient">Add Patient</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/fetch-consultations">View Consultations</a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="#">Profile</a>
         </li>
         <li class="nav-item">
@@ -40,31 +37,37 @@
 </div>
 
 <div class="container mt-3">
-  <h2>All Patients</h2>
+  <h2>All Consulations</h2>
   <table class="table">
     <thead>
       <tr>
         <th>Name</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Address</th>
-        <th>Gender</th>
-        <th>Age</th>
+        <th>Weight</th>
+        <th>Fever</th>
+        <th>BP High</th>
+        <th>BP Low</th>
+        <th>Sugar</th>
+        <th>Complaints</th>
+        <th>Medicines</th>
+        <th>Follow Up</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
 
-    {% for patient in patients %}
+    {% for consultation in consultations %}
 
       <tr>
-        <td>{{patient['name']}}</td>
-        <td>{{patient['phone']}}</td>
-        <td>{{patient['email']}}</td>
-        <td>{{patient['address']}}</td>
-        <td>{{patient['gender']}}</td>
-        <td>{{patient['age']}}</td>
-        <td><a href="/update-patient/{{patient['_id']}}">Update</a> | <a href="/delete-patient/{{patient['_id']}}">Delete</a> | <a href="/add-consultation/{{patient['_id']}}"> Add Consultation</a> | <a href="/fetch-consultations-of-patient/{{patient['_id']}}"> View Consultation</a></td>
+        <td>{{consultation['patient_name']}}</td>
+        <td>{{consultation['weight']}}</td>
+        <td>{{consultation['fever']}}</td>
+        <td>{{consultation['bphigh']}}</td>
+        <td>{{consultation['bplow']}}</td>
+        <td>{{consultation['sugar']}}</td>
+        <td>{{consultation['complaints']}}</td>
+        <td>{{consultation['medicines']}}</td>
+        <td>{{consultation['followup']}}</td>
+        <td><a href="/">Update</a> | <a href="/">Delete</a></td>
       </tr>
 
     {% endfor %}
