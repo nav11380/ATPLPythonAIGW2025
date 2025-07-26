@@ -1,6 +1,7 @@
 from flask import *
 from Session25A import User # Doctor
 from Session26A import Patient
+from Session29A import Consultation
 from Session24 import MongoDBHelper
 import hashlib
 from bson.objectid import ObjectId
@@ -40,8 +41,16 @@ def add_patient():
 # View
 @web_app.route('/add-consultation/<id>')
 def add_consultation(id):
+
+    # Add the patient id into session
+    session['patient_id'] = id
+
+    query = {'_id': ObjectId(id)}
+    db.select_db(collection='patients')
+    patient = db.fetch(query)[0]
+
     if len(session['user_id']) > 0:
-        return render_template('add-consultation.html', name=session['name'], email=session['email'])
+        return render_template('add-consultation.html', name=session['name'], email=session['email'], patient_name=patient['name'])
     else:
         return redirect('/')
 
@@ -114,6 +123,37 @@ def add_patient_in_db():
     else:
         return redirect('/')
 
+
+# Controller
+@web_app.route('/add-consultation-in-db', methods=['POST'])
+def add_consultation_in_db():
+
+    if len(session['user_id']) > 0:
+
+        consultation = Consultation()
+        consultation.weight = request.form['weight']
+        consultation.fever = request.form['fever']
+        consultation.bphigh = request.form['bphigh']
+        consultation.bplow = request.form['bplow']
+        consultation.sugar = request.form['sugar']
+        consultation.complaints = request.form['complaints']
+        consultation.medicines = request.form['medicines']
+        consultation.followup = request.form['followup']
+        consultation.patient_id = session['patient_id'] # Patient ID
+        consultation.doctor_id = session['user_id'] # Doctor ID
+    
+        print(consultation.to_document())
+
+        db.select_db(collection='consultations')
+        result = db.insert(document=consultation.to_document())
+
+        if len(str(result.inserted_id)) > 0:
+            return render_template('success.html', message='Consultation with medicines {} added successfully in the system'.format(consultation.medicines), name=session['name'], email=session['email'])
+        else:
+            return render_template('error.html', message='Something Went Wrong. Try Again', name=session['name'], email=session['email'])
+    
+    else:
+        return redirect('/')
 
 
 @web_app.route('/fetch-user', methods=['POST'])
