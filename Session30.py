@@ -6,6 +6,22 @@ from Session24 import MongoDBHelper
 import hashlib
 from bson.objectid import ObjectId
 
+"""
+    Assignment:
+    What Else needs to be coded ?
+    1. Profile Section of Doctor (Edit/Change Password etc)
+    2. Patient Card to have previous consultations
+    3. Patient Card to have numbers i.e. how many consultations etc
+    4. Patient Card to show next followup
+    5. Fetch consultations for a particular Patient
+    6. Flag those numbers which are outisde the permissible limits
+        eg: if bp high is 140 -> it should come in red color
+    7. explore how to intgrate charts 
+    etc
+    etc
+"""
+
+
 web_app = Flask('Doctors App')
 db = MongoDBHelper()
 db.select_db(db_name='gw2025', collection='users')
@@ -69,8 +85,56 @@ def logout():
 # Controller
 @web_app.route('/search-patient', methods=['POST'])
 def search_patient_in_db():
-    pass 
-   
+    search = request.form['search']
+    # Code to search from MongoDB
+    # query = {
+    #     'phone': search
+    # }
+    
+    # search based on phone, where any phone if contains the search keyword
+    # This is case sensitive 
+    # query = {
+    #     'phone': {'$regex': search},
+    #     'doctor_id': session['user_id']
+    # }
+
+    # query = {
+    #     # i in options, ignores the case i.e. case insesitive search
+    #     'name': {'$regex': search, '$options': 'i'},
+    #     'doctor_id': session['user_id']
+    # }
+
+    query = {
+        # i in options, ignores the case i.e. case insesitive search
+        
+        '$or':[
+            {'name': {'$regex': search, '$options': 'i'}},
+            {'phone': {'$regex': search, '$options': 'i'}},
+            {'email': {'$regex': search, '$options': 'i'}},
+        ],
+        'doctor_id': session['user_id']
+    }
+
+    # Sort
+    # Filter
+
+    db.select_db(collection='patients')
+    documents = db.fetch(query)
+
+    if len(documents) == 1:
+        return render_template('patient-card.html', name=session['name'], 
+                                email=session['email'], 
+                                patient=documents[0]
+                                )
+    elif len(documents) > 1:
+        return render_template('patients.html', name=session['name'], 
+                                email=session['email'], total=len(documents), 
+                                patients=documents
+                                )
+    else:
+       return render_template('error.html', message='No Patient Found for the search {}'.format(search), name=session['name'], email=session['email'])
+
+
 
 
 # Controller
@@ -323,6 +387,19 @@ def update_patient_in_db():
     
     else:
         return redirect('/')
+
+
+# Controller: Receives an Input in the URL
+@web_app.route('/patient-details/<id>')
+def patient_details(id):
+    db.select_db(collection='patients')
+    query = {'_id': ObjectId(id)}
+    documents = db.fetch(query)
+    if len(documents) > 0:
+        # pass patient as an input to patient-card.html and ensure it is 0th index of documents list
+        return render_template('patient-card.html', name=session['name'], email=session['email'], patient=documents[0])
+    else:
+        return render_template('error.html', message='Patient Details Failed. Try Again', name=session['name'], email=session['email'])
 
 
 

@@ -18,6 +18,9 @@
     <nav class="navbar navbar-expand-sm bg-light">
     <div class="container-fluid">
         <ul class="navbar-nav">
+         <li class="nav-item">
+            <a class="nav-link" href="/home">Home</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="/add-patient">Add Patient</a>
         </li>
@@ -40,18 +43,22 @@
 </div>
 
 <div class="container mt-3">
-  <h2>Search Patient</h2>
-  <form action="/search-patient" method="post">
+<div class="card">
+    <div class="card-body">
+      <h4 class="card-title">{{patient['name']}}</h4>
+      <p class="card-text">Phone: {{patient['phone']}}</p>
+      <p class="card-text">Email: {{patient['email']}}</p>
+      <p class="card-text">Addredd: {{patient['address']}}</p>
+      <p class="card-text">Gender: {{patient['gender']}}</p>
+      <p class="card-text">Age: {{patient['age']}}</p>
 
-    <div class="mb-3 mt-3">
-      <label for="search">Patient Name or Email or Phone:</label>
-      <input type="text" class="form-control" id="search" placeholder="Enter Search Keyword" name="search">
+      <a href="/update-patient/{{patient['_id']}}" class="card-link">Update</a>
+      <a href="/delete-patient/{{patient['_id']}}" class="card-link">Delete</a>
+      <a href="/add-consultation/{{patient['_id']}}" class="card-link"> Add Consultation</a>
+      <a href="/fetch-consultations-of-patient/{{patient['_id']}}" class="card-link"> View Consultation</a>
     </div>
-
-    <button type="submit" class="btn btn-primary">Search</button>
-
-  </form>
-</div>
+  </div>
+  </div>
 
 </body>
 </html>
