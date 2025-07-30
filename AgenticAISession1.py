@@ -23,6 +23,7 @@
 """
 
 import streamlit as st
+import time
 st.set_page_config(page_title='Chat UI')
 st.title('Chat UI Demo1')
 st.subheader('Ask a Question and i will help you with answer')
@@ -64,5 +65,16 @@ if user_input: # user_input if not None
 
 
 for message in st.session_state.messages:
-    with st.chat_message(message['role']):
-        st.markdown(message['content'])
+    if message['role'] == 'user':    
+        with st.chat_message(message['role']):
+            st.markdown(message['content'])
+    else:
+        with st.chat_message(message['role']):
+            typing_placeholder = st.empty()
+            typing_text = ''
+            for character in message['content']:
+                typing_text += character
+                typing_placeholder.markdown(typing_text)
+                time.sleep(0.05)
+
+    
