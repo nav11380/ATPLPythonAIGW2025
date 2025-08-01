@@ -17,6 +17,7 @@ import time
 import datetime
 from pymongo import MongoClient
 from openai import OpenAI
+import json
 
 # Section1 - Security Configuration
 # HW: Explore what is dotenv in python for securing your keys
@@ -142,6 +143,7 @@ def ai_response(user_input):
         messages=[
             # this is role as doctors assistant
             {'role': 'system', 'content': 'You are a doctors assistant. Use phone number as unique key and write medicines as well if required.'},
+            # this is the previous chat context which we are also sending alongwith
             *[{'role': message['role'], 'content': message['content']} for message in st.session_state.messages],
             # immediate user question/prompt/input
             {'role': 'user', 'content': user_input}
@@ -156,7 +158,11 @@ def ai_response(user_input):
     if choice.finish_reason == 'tool_calls':
         function_name = choice.message.tool_calls[0].function.name
         arguments = choice.message.tool_calls[0].function.arguments
-
+        # JSON to Dictionary
+        # i.e. string representation of dicionary which is JSON
+        # to python dictionary
+        arguments = json.loads(arguments)
+        # json.dumps -> convert python dictionary into JSON
         if function_name == 'add_patient':
             return add_patient(**arguments)
         elif function_name == 'save_consultation':
