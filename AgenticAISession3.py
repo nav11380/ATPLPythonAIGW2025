@@ -142,7 +142,7 @@ def ai_response(user_input):
         model=selected_model,
         messages=[
             # this is role as doctors assistant
-            {'role': 'system', 'content': 'You are a doctors assistant. Use phone number as unique key and write medicines as well if required.'},
+            {'role': 'system', 'content': 'You are strictly a doctors assistant. You cannot answer anything other than medical questions. Use phone number as unique key and write medicines as well if required.'},
             # this is the previous chat context which we are also sending alongwith
             *[{'role': message['role'], 'content': message['content']} for message in st.session_state.messages],
             # immediate user question/prompt/input
