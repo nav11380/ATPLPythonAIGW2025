@@ -24,7 +24,7 @@ def register():
 
 @web_app.route('/home')
 def home():
-    if session.get('user_id') > 0:
+    if len(session['user_id']) > 0:
         return render_template('home.html',name = session['name'], email = session['email'])
     else:
         return redirect('/')
@@ -38,8 +38,6 @@ def add_patient():
     
 @web_app.route('/add-consultation/<id>')
 def add_consultation(id):
-    if not session.get('user_id'):
-        return redirect('/')
     
     query ={'_id':ObjectId(id)}
     db.select_db(collection= 'patients')
@@ -49,14 +47,14 @@ def add_consultation(id):
     session['patient_name'] = patient['name']
 
     if len(session['user_id']) > 0:
-        return render_template('addconsultation.html',name = session['name'], email = session['email'],patient_name= patient['name'])
+        return render_template('add-consultation.html',name = session['name'], email = session['email'],patient_name= patient['name'])
     else: 
         return redirect('/')
     
     
 @web_app.route('/logout')
 def logout():
-    session.clear()  
+    
     session['user_id'] = ''
     session['name'] =  ''
     session['email'] =''
@@ -64,19 +62,40 @@ def logout():
 
 @web_app.route('/search-patient', methods=['POST'])
 def search_patient_in_db():
+    patient_id = request.form.get('patient_id')
+    results = db.search('patients', {'id': patient_id})
+    if not results:
+        return render_template('patient_not_found.html'), 404
+    return render_template('patient_results.html', patients=results)
+
+
+@web_app.route('/search-patient', methods=['POST'])
+def search_patient_in_db():
     search = request.form['search']
-    query = {
-        'phone': search
+    query ={
+        '$or':[
+            {'name': {'$regex': search, '$options': 'i'}},
+            {'phone': {'$regex': search, '$options': 'i'}},
+            {'email': {'$regex': search, '$options': 'i'}},
+        ],
+        'doctor_id': session['user_id']
     }
+    
     db.select_db(collection='patients')
     documents = db.fetch(query)
 
-    if len(documents) > 0:
-        return render_template('patients.html',name =session['name'],
-                               email = session['email'],total = len(documents),
-                                patients = documents
+    if len(documents) == 1:
+        return render_template('patient-card.html', name=session['name'], 
+                                email=session['email'], 
+                                patient=documents[0]
                                 )
-
+    elif len(documents) > 1:
+        return render_template('patients.html', name=session['name'], 
+                                email=session['email'], total=len(documents), 
+                                patients=documents
+                                )
+    else:
+       return render_template('error.html', message='No Patient Found for the search {}'.format(search), name=session['name'], email=session['email'])
    
 
 # Controller
@@ -170,8 +189,8 @@ def fetch_user_from_db():
 
     db.select_db(collection='users')
     documents = db.fetch(query)
-    if len(documents) > 0:
-        user = documents[0]
+  
+    user = documents[0]
     #print(user)
     if len(documents) > 0:
         session['user_id'] = str(user['_id'])
@@ -203,6 +222,7 @@ def fetch_patients_from_db():
             return  render_template('error.html', message='Patients Not Found', name=session['name'], email=session['email'])
     else:
         return redirect('/')
+    
 @web_app.route('/fetch-consultations')
 def fetch_consulations_from_db():
 
@@ -306,6 +326,16 @@ def update_patient_in_db():
     else:
         return redirect('/')
 
+@web_app.route('/patient-details/<id>')
+def patient_details(id):
+    db.select_db(collection='patients')
+    query = {'_id': ObjectId(id)}
+    documents = db.fetch(query)
+    if len(documents) > 0:
+        # pass patient as an input to patient-card.html and ensure it is 0th index of documents list
+        return render_template('patient-card.html', name=session['name'], email=session['email'], patient=documents[0])
+    else:
+        return render_template('error.html', message='Patient Details Failed. Try Again', name=session['name'], email=session['email'])
 
    
 def main():
