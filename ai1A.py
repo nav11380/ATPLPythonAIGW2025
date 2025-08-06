@@ -1,12 +1,12 @@
 from prac24 import MongoDBHelper
 
 db = MongoDBHelper()
-db.select_db(db_name= 'gw2025', collection= 'questions')
+db.select_db(db_name ='gw2025', collection='questions')
 
 question_bank = [
     {
             'question':'what is python',
-            'answer':'its a programming language',
+            'answer':'its a programming cd language',
             'keywords': ['python']
          },
 
@@ -31,6 +31,7 @@ question_bank = [
             'keywords': ['learn', 'code']
          }
     ]
+
 
 
 for question in question_bank:

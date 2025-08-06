@@ -1,24 +1,18 @@
 import streamlit as st
 import time
+
 st.set_page_config(page_title='Chat UI')
-st.title('Chat UI Demo')
-st.subheader('Ask a question and i will answer')
+st.title('Chat UI Demo1')
+st.subheader('Ask a Question and i will help you with answer')
 
 question_bank = {
-    'what is python' : 'its a programming language',
-    'what is streamlit' : 'its a ui library for modern UI development in python',
-    'can i build AI Agent' : 'Yes,you can use Python ,open AI,Crew AI and many more'
-    }
-
-#st.markdown('This is a markdown')
-'''message = {
-    'role' : 'user',
-    'content' : 'what is python'
-}'''
-
+    'what is python': 'its a programming language',
+    'what is streamlit': 'its a UI library for modern UI development in python',
+    'can i build AI Agent': 'Yes, you can use Python, OpenAI, CrewAI and many more'
+}
 
 if 'messages' not in st.session_state:
-    st.session_state.messages =[]
+    st.session_state.messages = []
 
 for message in st.session_state.messages:
     if message['role'] == 'user':    
@@ -28,27 +22,23 @@ for message in st.session_state.messages:
         with st.chat_message(message['role']):
             st.markdown(message['content'])
 
-#for message in st.session_state.messages:
- #   st.markdown('{role}\{content}'.format_map(message))
-
-user_input = st.chat_input('Type your Question.Enter is send..')
+user_input = st.chat_input('Type Your Question. Enter is Send..')
 if user_input:
-    #st.markdown(user_input)
     message = {
-        'role' : 'user',
-        'content' : user_input
+        'role': 'user',
+        'content': user_input
     }
     st.session_state.messages.append(message)
     with st.chat_message(message['role']):
         st.markdown(message['content'])
 
     if user_input in question_bank:
-        message ={
-            'role' :'ai',
-            'content' : question_bank[user_input]
+        message = {
+            'role': 'ai',
+            'content': question_bank[user_input]
         }
         st.session_state.messages.append(message)
-
+        
         with st.chat_message(message['role']):
             typing_placeholder = st.empty()
             typing_text = ''
@@ -56,10 +46,10 @@ if user_input:
                 typing_text += character
                 typing_placeholder.markdown(typing_text)
                 time.sleep(0.05)
-    else :
-        message= {
-            'role' : 'ai',
-            'content' : 'Sorry, i cannot answer this question'
+    else:
+        message = {
+            'role': 'ai',
+            'content': 'Sorry, I cannot answer this question'
         }
         st.session_state.messages.append(message)
         with st.chat_message(message['role']):
@@ -70,7 +60,4 @@ if user_input:
                 typing_placeholder.markdown(typing_text)
                 time.sleep(0.05)
 
-
-
-
-
+    
